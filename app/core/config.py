@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import List, Union
 
 from pydantic import AnyHttpUrl, BaseSettings, PostgresDsn, validator
 
@@ -16,6 +16,10 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     DATABASE_URL: str
+
+    @validator("DATABASE_URL", pre=True)
+    def patch_database_url(cls, v: str):
+        return v.replace("postgres://", "postgresql://", 1)
 
     ADMIN_ID: str
     ADMIN_PASSWORD: str
