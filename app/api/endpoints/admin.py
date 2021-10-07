@@ -27,9 +27,9 @@ async def admin_root():
 
 @router.post('/places/', response_model=schemas.AdminPlace)
 async def create_place(place: schemas.PlaceCreate, db: Session = Depends(get_db)):
-    db_place = crud.place.get_by_key(db, key=place.key)
+    db_place = crud.place.get(db, id=place.id)
     if db_place:
-        raise HTTPException(status_code=400, detail="Key already exists")
+        raise HTTPException(status_code=400, detail="ID already exists")
     return crud.place.create(db, obj_in=place)
 
 @router.get("/places/", response_model=List[schemas.AdminPlace])
@@ -37,9 +37,9 @@ async def read_places(skip: int = 0, limit: int = 100, db: Session = Depends(get
     places = crud.place.get_multi(db, skip=skip, limit=limit)
     return places
 
-@router.get("/places/{key}", response_model=schemas.AdminPlace)
-async def read_place(key: str, db: Session = Depends(get_db)):
-    db_place = crud.place.get_by_key(db, key=key)
+@router.get("/places/{id}", response_model=schemas.AdminPlace)
+async def read_place(id: str, db: Session = Depends(get_db)):
+    db_place = crud.place.get(db, id=id)
     if db_place is None:
         raise HTTPException(status_code=404, detail="Invalid key")
     return db_place

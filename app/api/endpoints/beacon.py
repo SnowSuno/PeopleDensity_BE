@@ -13,7 +13,7 @@ router = APIRouter(
 @router.put('/')
 async def update_people_num(place: schemas.PlaceUpdate, x_beacon_token: str = Header(...),
                             db: Session = Depends(get_db)):
-    db_place = crud.place.get_by_key(db, key=place.key)
+    db_place = crud.place.get(db, id=place.id)
     if db_place is None:
         raise HTTPException(status_code=404, detail="Invalid key")
 

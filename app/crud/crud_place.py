@@ -9,11 +9,6 @@ from app.schemas.place import PlaceCreate, PlaceUpdate
 
 
 class CRUDPlace(CRUDBase[Place, PlaceCreate, PlaceUpdate]):
-    def get_by_key(
-        self, db: Session, *, key: str
-    ) -> Place:
-        return db.query(self.model).filter(Place.key == key).first()
-
     def create(self, db: Session, *, obj_in: PlaceCreate) -> Place:
         if obj_in.token is None:
             obj_in.token = self._generate_token()

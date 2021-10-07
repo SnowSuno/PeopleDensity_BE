@@ -3,23 +3,24 @@ from typing import Optional
 from pydantic import BaseModel
 
 class PlaceBase(BaseModel):
-    key: str
+    id: str
 
 class PlaceCreate(PlaceBase):
+    name: str
     token: Optional[str]
 
 class PlaceUpdate(PlaceBase):
     current_num: int
 
 class Place(PlaceBase):
-    id: int
+    name: str
     current_num: int
 
     class Config:
         orm_mode = True
 
 class AdminPlace(PlaceBase):
-    id: int
+    name: str
     token: str
     current_num: int
 
