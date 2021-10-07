@@ -15,7 +15,7 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
-    DATABASE_URL: str
+    DATABASE_URL: Union[PostgresDsn, str]
 
     @validator("DATABASE_URL", pre=True)
     def patch_database_url(cls, v: str):
