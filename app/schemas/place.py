@@ -1,10 +1,12 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 class PlaceBase(BaseModel):
     key: str
 
 class PlaceCreate(PlaceBase):
-    pass
+    token: Optional[str]
 
 class PlaceUpdate(PlaceBase):
     current_num: int

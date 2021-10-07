@@ -3,11 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 
-from app.core import models
-from app.core.models.database import SessionLocal, engine
+from app.database.session import engine
 
-from app.routers import api
-from app.internal import beacon, admin
+# from app._routers import api
+# from app._internal import beacon, admin
+from app import api, models
 
 
 def get_application():
@@ -24,8 +24,6 @@ def get_application():
     )
 
     _app.include_router(api.router)
-    _app.include_router(beacon.router)
-    _app.include_router(admin.router)
 
     return _app
 
